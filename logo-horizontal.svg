@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 72" width="340" height="72">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="72" y2="72" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+    <style>
+      text { font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+    </style>
+  </defs>
+
+  <!-- Background (dark navy — transparent variant available by removing this rect) -->
+  <rect width="340" height="72" fill="#0c1425" rx="0"/>
+
+  <!-- Icon rounded square -->
+  <rect x="8" y="8" width="56" height="56" rx="12" fill="url(#bg)"/>
+
+  <!-- Stream 1 (top) -->
+  <path d="M19 27 H52 M46 21 L52 27 L46 33" stroke="white" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- Stream 2 (middle) -->
+  <path d="M19 36 H57 M51 30 L57 36 L51 42" stroke="white" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <!-- Stream 3 (bottom) -->
+  <path d="M19 45 H52 M46 39 L52 45 L46 51" stroke="white" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+  <!-- Wordmark -->
+  <text x="78" y="39" font-size="22" font-weight="700" fill="#ffffff" letter-spacing="-0.5">StreamOps AI</text>
+  <text x="79" y="56" font-size="11" font-weight="500" fill="#60a5fa" letter-spacing="1.5">AI AUTOMATION FOR XERO</text>
+</svg>

@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROI Calculator — StreamOps AI</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:      #0c1425;
+      --navy-mid:  #111d35;
+      --navy-card: #162040;
+      --blue:      #3b82f6;
+      --blue-light:#60a5fa;
+      --teal:      #06b6d4;
+      --teal-light:#22d3ee;
+      --white:     #ffffff;
+      --off-white: #f8fafc;
+      --muted:     #94a3b8;
+      --border:    rgba(255,255,255,0.08);
+      --radius:    12px;
+      --radius-lg: 20px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--off-white);
+      color: #1e293b;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(12, 20, 37, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .logo {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none; color: var(--white);
+      font-weight: 700; font-size: 18px; letter-spacing: -0.3px;
+    }
+    .logo-icon {
+      width: 32px; height: 32px;
+      background: linear-gradient(135deg, var(--blue), var(--teal));
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .logo-icon svg { width: 18px; height: 18px; }
+    .nav-cta {
+      background: linear-gradient(135deg, var(--blue), var(--teal));
+      color: var(--white); font-weight: 600; font-size: 14px;
+      padding: 10px 20px; border-radius: 8px;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    /* HERO BAND */
+    .hero-band {
+      background: linear-gradient(135deg, var(--navy) 0%, #0e1e3a 100%);
+      padding: 120px 24px 64px;
+      text-align: center;
+    }
+    .hero-band h1 {
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 800; color: var(--white);
+      letter-spacing: -1.5px; line-height: 1.1;
+      margin-bottom: 16px;
+    }
+    .hero-band h1 span {
+      background: linear-gradient(90deg, var(--blue-light), var(--teal-light));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero-band p {
+      font-size: 18px; color: var(--muted);
+      max-width: 560px; margin: 0 auto;
+    }
+
+    /* CALCULATOR */
+    .calc-section {
+      max-width: 900px; margin: 0 auto;
+      padding: 56px 24px 80px;
+    }
+
+    .calc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+    @media (max-width: 700px) { .calc-grid { grid-template-columns: 1fr; } }
+
+    .calc-inputs {
+      background: var(--white);
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-lg);
+      padding: 32px;
+    }
+    .calc-inputs h2 {
+      font-size: 18px; font-weight: 700; color: #0f172a;
+      margin-bottom: 28px; letter-spacing: -0.3px;
+    }
+
+    .input-group { margin-bottom: 28px; }
+    .input-group:last-child { margin-bottom: 0; }
+    .input-label {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 10px;
+    }
+    .input-label span:first-child {
+      font-size: 14px; font-weight: 600; color: #374151;
+    }
+    .input-value {
+      font-size: 14px; font-weight: 700;
+      color: var(--blue);
+      background: #eff6ff;
+      padding: 3px 10px; border-radius: 20px;
+      min-width: 70px; text-align: center;
+    }
+    input[type=range] {
+      -webkit-appearance: none; appearance: none;
+      width: 100%; height: 5px;
+      background: #e2e8f0; border-radius: 99px; outline: none;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none;
+      width: 20px; height: 20px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), var(--teal));
+      cursor: pointer; border: 3px solid white;
+      box-shadow: 0 1px 4px rgba(59,130,246,0.4);
+    }
+    input[type=range]::-webkit-slider-runnable-track {
+      height: 5px; border-radius: 99px;
+    }
+
+    /* METRICS */
+    .metrics-col {}
+    .metric-cards {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+      margin-bottom: 20px;
+    }
+    .metric-card {
+      background: var(--white);
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius);
+      padding: 18px 16px;
+    }
+    .metric-card.highlight {
+      background: linear-gradient(135deg, var(--navy), #162040);
+      border-color: transparent;
+    }
+    .metric-card-label {
+      font-size: 12px; font-weight: 500;
+      color: #64748b; text-transform: uppercase;
+      letter-spacing: 0.5px; margin-bottom: 6px;
+    }
+    .metric-card.highlight .metric-card-label { color: rgba(255,255,255,0.5); }
+    .metric-card-value {
+      font-size: 26px; font-weight: 800;
+      color: #0f172a; letter-spacing: -0.5px;
+    }
+    .metric-card.highlight .metric-card-value {
+      background: linear-gradient(90deg, var(--blue-light), var(--teal-light));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .metric-card-sub {
+      font-size: 11px; color: #94a3b8; margin-top: 2px;
+    }
+    .metric-card.highlight .metric-card-sub { color: rgba(255,255,255,0.35); }
+
+    /* TIERS */
+    .tiers-wrap { margin-bottom: 20px; }
+    .tiers-label {
+      font-size: 12px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.5px; color: #64748b; margin-bottom: 12px;
+    }
+    .tier-cards { display: flex; flex-direction: column; gap: 10px; }
+    .tier-card {
+      background: var(--white);
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .tier-card.recommended {
+      border: 2px solid var(--blue);
+      box-shadow: 0 4px 20px rgba(59,130,246,0.15);
+    }
+    .tier-left { display: flex; align-items: center; gap: 12px; }
+    .tier-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: #e2e8f0; flex-shrink: 0;
+    }
+    .tier-card.recommended .tier-dot {
+      background: linear-gradient(135deg, var(--blue), var(--teal));
+    }
+    .tier-name { font-size: 15px; font-weight: 700; color: #0f172a; }
+    .tier-desc { font-size: 12px; color: #94a3b8; margin-top: 1px; }
+    .tier-right { text-align: right; }
+    .tier-price { font-size: 17px; font-weight: 700; color: #0f172a; }
+    .tier-roi { font-size: 12px; font-weight: 600; margin-top: 2px; }
+    .tier-roi.positive { color: #10b981; }
+    .tier-roi.negative { color: #ef4444; }
+    .tier-badge {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.3px;
+      color: var(--blue); background: #eff6ff;
+      padding: 2px 8px; border-radius: 20px;
+      margin-left: 8px; vertical-align: middle;
+    }
+
+    /* INSIGHT BOX */
+    .insight {
+      background: linear-gradient(135deg, #eff6ff, #ecfeff);
+      border: 1px solid #bfdbfe;
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      font-size: 13px; color: #1e40af; line-height: 1.6;
+    }
+    .insight strong { color: #1e3a8a; }
+
+    /* CHART */
+    .chart-wrap {
+      background: var(--white);
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-lg);
+      padding: 28px 28px 20px;
+      margin-top: 40px;
+    }
+    .chart-wrap h3 {
+      font-size: 16px; font-weight: 700; color: #0f172a;
+      margin-bottom: 20px; letter-spacing: -0.2px;
+    }
+    .chart-canvas-wrap { position: relative; width: 100%; height: 260px; }
+
+    /* CTA */
+    .cta-band {
+      background: linear-gradient(135deg, var(--navy) 0%, #0e1e3a 100%);
+      padding: 64px 24px;
+      text-align: center;
+    }
+    .cta-band h2 {
+      font-size: 32px; font-weight: 800; color: var(--white);
+      letter-spacing: -0.8px; margin-bottom: 12px;
+    }
+    .cta-band p { color: var(--muted); font-size: 17px; margin-bottom: 28px; }
+    .cta-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--blue), var(--teal));
+      color: var(--white); font-weight: 700; font-size: 16px;
+      padding: 16px 36px; border-radius: 10px;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .cta-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+
+    footer {
+      background: var(--navy);
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+      font-size: 13px; color: #475569;
+    }
+    footer a { color: #475569; text-decoration: none; }
+    footer a:hover { color: var(--muted); }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 6.5H16.5M13.5 3.5L16.5 6.5L13.5 9.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M2 12H19M16 9L19 12L16 15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M2 17.5H16.5M13.5 14.5L16.5 17.5L13.5 20.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      StreamOps AI
+    </a>
+    <a href="index.html#waitlist" class="nav-cta">Join Waitlist</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero-band">
+  <h1>How much is manual<br><span>invoice entry costing you?</span></h1>
+  <p>Adjust the sliders below to see your real monthly cost — and what automation saves you.</p>
+</div>
+
+<!-- CALCULATOR -->
+<section class="calc-section">
+  <div class="calc-grid">
+
+    <!-- INPUTS -->
+    <div class="calc-inputs">
+      <h2>Your business</h2>
+
+      <div class="input-group">
+        <div class="input-label">
+          <span>Invoices per month</span>
+          <span class="input-value" id="inv-out">20</span>
+        </div>
+        <input type="range" min="5" max="500" step="5" value="20" id="invoices" oninput="calc()">
+      </div>
+
+      <div class="input-group">
+        <div class="input-label">
+          <span>Minutes per invoice (manual)</span>
+          <span class="input-value" id="mins-out">10 min</span>
+        </div>
+        <input type="range" min="5" max="25" step="1" value="10" id="mins" oninput="calc()">
+      </div>
+
+      <div class="input-group">
+        <div class="input-label">
+          <span>AP staff hourly rate</span>
+          <span class="input-value" id="rate-out">$45/hr</span>
+        </div>
+        <input type="range" min="30" max="90" step="5" value="45" id="rate" oninput="calc()">
+      </div>
+
+      <div class="input-group">
+        <div class="input-label">
+          <span>Error correction overhead</span>
+          <span class="input-value" id="err-out">20%</span>
+        </div>
+        <input type="range" min="0" max="50" step="5" value="20" id="errors" oninput="calc()">
+      </div>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="metrics-col">
+      <div class="metric-cards" id="metric-cards"></div>
+      <div class="tiers-wrap">
+        <div class="tiers-label">Subscription tiers</div>
+        <div class="tier-cards" id="tier-cards"></div>
+      </div>
+      <div class="insight" id="insight"></div>
+    </div>
+
+  </div>
+
+  <!-- CHART -->
+  <div class="chart-wrap">
+    <h3>Monthly cost comparison</h3>
+    <div class="chart-canvas-wrap">
+      <canvas id="roiChart" role="img" aria-label="Bar chart comparing monthly manual labour cost against StreamOps AI subscription tiers"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-band">
+  <h2>Ready to stop paying for manual entry?</h2>
+  <p>Join the waitlist and be first to access the beta. Limited spots available.</p>
+  <a href="index.html#waitlist" class="cta-btn">Get Early Access →</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 StreamOps AI. ASIC Registered. All prices AUD. &nbsp;·&nbsp; <a href="privacy.html">Privacy</a> &nbsp;·&nbsp; <a href="terms.html">Terms</a> &nbsp;·&nbsp; <a href="mailto:hello@streamopsai.com.au">hello@streamopsai.com.au</a></p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+  const TIERS = [
+    { name: 'Bronze', price: 1500, desc: 'Maintenance + monitoring' },
+    { name: 'Silver', price: 2500, desc: '1 new automation/month' },
+    { name: 'Gold',   price: 4000, desc: '2 automations + strategy' }
+  ];
+
+  let chart;
+
+  function fmt(n)  { return '$' + Math.round(n).toLocaleString(); }
+  function fmtH(h) { return h.toFixed(1) + ' hrs'; }
+
+  function calc() {
+    const inv    = +document.getElementById('invoices').value;
+    const mins   = +document.getElementById('mins').value;
+    const rate   = +document.getElementById('rate').value;
+    const errPct = +document.getElementById('errors').value / 100;
+
+    document.getElementById('inv-out').textContent  = inv;
+    document.getElementById('mins-out').textContent = mins + ' min';
+    document.getElementById('rate-out').textContent  = '$' + rate + '/hr';
+    document.getElementById('err-out').textContent   = Math.round(errPct * 100) + '%';
+
+    const rawHours    = (inv * mins) / 60;
+    const totalHours  = rawHours * (1 + errPct);
+    const monthlyCost = totalHours * rate;
+    const annualCost  = monthlyCost * 12;
+    const annualSaving = annualCost * 0.92;
+
+    document.getElementById('metric-cards').innerHTML = `
+      <div class="metric-card">
+        <div class="metric-card-label">Hours saved / month</div>
+        <div class="metric-card-value">${fmtH(totalHours)}</div>
+        <div class="metric-card-sub">incl. error corrections</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-card-label">Monthly labour cost</div>
+        <div class="metric-card-value">${fmt(monthlyCost)}</div>
+        <div class="metric-card-sub">invoice entry only</div>
+      </div>
+      <div class="metric-card highlight">
+        <div class="metric-card-label">Annual labour cost</div>
+        <div class="metric-card-value">${fmt(annualCost)}</div>
+        <div class="metric-card-sub">at ${fmt(rate)}/hr</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-card-label">Annual saving potential</div>
+        <div class="metric-card-value">${fmt(annualSaving)}</div>
+        <div class="metric-card-sub">~92% automation rate</div>
+      </div>
+    `;
+
+    let rec = 0;
+    if (inv >= 100) rec = 2;
+    else if (inv >= 40) rec = 1;
+
+    document.getElementById('tier-cards').innerHTML = TIERS.map((t, i) => {
+      const annualFee = t.price * 12;
+      const roi = Math.round((annualSaving - annualFee) / annualFee * 100);
+      const isRec = i === rec;
+      const roiClass = roi >= 0 ? 'positive' : 'negative';
+      const roiSign  = roi >= 0 ? '+' : '';
+      return `<div class="tier-card ${isRec ? 'recommended' : ''}">
+        <div class="tier-left">
+          <div class="tier-dot"></div>
+          <div>
+            <div class="tier-name">${t.name}${isRec ? '<span class="tier-badge">Best fit</span>' : ''}</div>
+            <div class="tier-desc">${t.desc}</div>
+          </div>
+        </div>
+        <div class="tier-right">
+          <div class="tier-price">${fmt(t.price)}/mo</div>
+          <div class="tier-roi ${roiClass}">${roiSign}${roi}% ROI</div>
+        </div>
+      </div>`;
+    }).join('');
+
+    const multiple = (annualSaving / (TIERS[rec].price * 12)).toFixed(1);
+    document.getElementById('insight').innerHTML =
+      `At <strong>${inv} invoices/month</strong>, manual entry costs roughly <strong>${fmt(monthlyCost)}/month</strong> in staff time. ` +
+      `StreamOps AI ${TIERS[rec].name} at <strong>${fmt(TIERS[rec].price)}/month</strong> delivers a <strong>${multiple}× return</strong> — ` +
+      `before counting faster close cycles, fewer errors, and time freed for higher-value work.`;
+
+    const barColors = [
+      '#64748b',
+      rec === 0 ? '#3b82f6' : '#bfdbfe',
+      rec === 1 ? '#3b82f6' : '#bfdbfe',
+      rec === 2 ? '#3b82f6' : '#bfdbfe'
+    ];
+    const data   = [Math.round(monthlyCost), 1500, 2500, 4000];
+    const labels = ['Your manual cost', 'Bronze ($1,500)', 'Silver ($2,500)', 'Gold ($4,000)'];
+
+    if (chart) {
+      chart.data.datasets[0].data = data;
+      chart.data.datasets[0].backgroundColor = barColors;
+      chart.update();
+    } else {
+      chart = new Chart(document.getElementById('roiChart'), {
+        type: 'bar',
+        data: {
+          labels,
+          datasets: [{
+            data,
+            backgroundColor: barColors,
+            borderRadius: 8,
+            borderSkipped: false
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: { callbacks: { label: ctx => ' ' + fmt(ctx.raw) + '/month' } }
+          },
+          scales: {
+            x: { grid: { display: false }, ticks: { font: { size: 12 }, color: '#64748b' } },
+            y: {
+              grid: { color: 'rgba(0,0,0,0.05)' },
+              ticks: { callback: v => '$' + v.toLocaleString(), font: { size: 12 }, color: '#64748b' }
+            }
+          }
+        }
+      });
+    }
+  }
+
+  calc();
+</script>
+</body>
+</html>

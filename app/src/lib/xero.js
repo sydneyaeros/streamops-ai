@@ -1,0 +1,45 @@
+const CLIENT_ID    = import.meta.env.VITE_XERO_CLIENT_ID
+const REDIRECT_URI = import.meta.env.VITE_XERO_REDIRECT_URI
+
+const SCOPES = [
+  'openid',
+  'profile',
+  'email',
+  'accounting.transactions',
+  'accounting.settings',
+  'offline_access'
+].join(' ')
+
+/**
+ * Generate a random state string for CSRF protection.
+ * Stored in sessionStorage and verified in the callback.
+ */
+export function generateState() {
+  const state = crypto.randomUUID()
+  sessionStorage.setItem('xero_oauth_state', state)
+  return state
+}
+
+/**
+ * Build the Xero OAuth 2.0 authorisation URL and redirect the browser to it.
+ */
+export function redirectToXero() {
+  const state = generateState()
+  const params = new URLSearchParams({
+    response_type: 'code',
+    client_id:     CLIENT_ID,
+    redirect_uri:  REDIRECT_URI,
+    scope:         SCOPES,
+    state
+  })
+  window.location.href = `https://login.xero.com/identity/connect/authorize?${params}`
+}
+
+/**
+ * Verify the state parameter returned by Xero matches what we stored.
+ */
+export function verifyState(returnedState) {
+  const stored = sessionStorage.getItem('xero_oauth_state')
+  sessionStorage.removeItem('xero_oauth_state')
+  return stored && stored === returnedState
+}

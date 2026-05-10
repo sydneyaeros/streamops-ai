@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>StreamOps AI — Brand Identity</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    /* Core palette */
+    --navy:       #0c1425;
+    --navy-mid:   #111c35;
+    --navy-light: #1a2847;
+    --charcoal:   #070c17;
+
+    --cyan:       #00d4ff;
+    --cyan-dim:   #00aacc;
+    --cyan-glow:  rgba(0, 212, 255, 0.15);
+
+    --blue:       #3b82f6;
+    --blue-dim:   #2563eb;
+    --blue-glow:  rgba(59, 130, 246, 0.15);
+
+    --teal:       #06b6d4;
+
+    --white:      #f8fafc;
+    --off-white:  #e2e8f0;
+    --muted:      #94a3b8;
+    --subtle:     #475569;
+    --border:     rgba(148, 163, 184, 0.12);
+
+    /* Gradients */
+    --grad-primary:   linear-gradient(135deg, #3b82f6 0%, #00d4ff 100%);
+    --grad-dark:      linear-gradient(180deg, #111c35 0%, #070c17 100%);
+    --grad-surface:   linear-gradient(135deg, rgba(59,130,246,0.08) 0%, rgba(0,212,255,0.05) 100%);
+
+    --radius-sm: 6px;
+    --radius:    10px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--charcoal);
+    color: var(--white);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(7, 12, 23, 0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 48px;
+    display: flex; align-items: center; gap: 0;
+    height: 60px;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; margin-right: 48px; }
+  .nav-logo span { font-weight: 700; font-size: 15px; letter-spacing: -0.3px; }
+  .nav-links { display: flex; gap: 0; }
+  .nav-links a {
+    font-size: 13px; font-weight: 500; color: var(--muted);
+    text-decoration: none; padding: 0 18px; height: 60px;
+    display: flex; align-items: center;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); border-color: var(--cyan); }
+  .badge-version {
+    margin-left: auto;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.5px;
+    color: var(--cyan); background: var(--cyan-glow);
+    border: 1px solid rgba(0, 212, 255, 0.25);
+    padding: 4px 10px; border-radius: 99px;
+  }
+
+  /* ── LAYOUT ── */
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 48px; }
+
+  section {
+    padding: 96px 0 64px;
+    border-bottom: 1px solid var(--border);
+  }
+  section:last-child { border-bottom: none; }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 120px 0 96px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+    width: 800px; height: 800px;
+    background: radial-gradient(ellipse at center, rgba(0,212,255,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-label {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--cyan); margin-bottom: 32px;
+  }
+  .hero-label::before {
+    content: ''; width: 24px; height: 1px; background: var(--cyan);
+  }
+  .hero h1 {
+    font-size: clamp(40px, 6vw, 72px);
+    font-weight: 800; letter-spacing: -2px; line-height: 1.05;
+    color: var(--white); margin-bottom: 24px;
+  }
+  .hero h1 span { background: var(--grad-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero p {
+    font-size: 18px; color: var(--muted); max-width: 560px;
+    font-weight: 400; line-height: 1.7;
+  }
+
+  /* ── SECTION HEADERS ── */
+  .section-num {
+    font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--cyan); margin-bottom: 16px;
+  }
+  .section-title {
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 800; letter-spacing: -1px; color: var(--white);
+    margin-bottom: 12px;
+  }
+  .section-sub {
+    font-size: 16px; color: var(--muted); margin-bottom: 56px;
+    max-width: 560px; line-height: 1.7;
+  }
+
+  /* ── CARDS / SURFACES ── */
+  .card {
+    background: var(--navy-mid);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+  }
+  .card-glow {
+    background: var(--grad-surface);
+    border-color: rgba(0, 212, 255, 0.2);
+  }
+
+  /* ── GRID ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+
+  /* ── LOGO SECTION ── */
+  .logo-showcase {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+  }
+  .logo-frame {
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    padding: 56px 40px;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 20px;
+  }
+  .logo-frame-dark  { background: var(--navy); }
+  .logo-frame-light { background: #f1f5f9; }
+  .logo-frame-glass {
+    background: linear-gradient(135deg, rgba(17,28,53,0.9) 0%, rgba(7,12,23,0.95) 100%);
+    border-color: rgba(0,212,255,0.2);
+    position: relative; overflow: hidden;
+  }
+  .logo-frame-glass::before {
+    content: '';
+    position: absolute; top: -80px; right: -80px;
+    width: 240px; height: 240px;
+    background: radial-gradient(circle, rgba(0,212,255,0.12) 0%, transparent 70%);
+  }
+  .logo-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--subtle);
+  }
+  .logo-label-light { color: #94a3b8; }
+
+  .logo-mark-lg {
+    width: 64px; height: 64px; border-radius: 16px;
+    background: linear-gradient(135deg, #3b82f6 0%, #00d4ff 100%);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 40px rgba(0, 212, 255, 0.25), 0 8px 32px rgba(0,0,0,0.4);
+  }
+  .logo-lockup { display: flex; align-items: center; gap: 14px; }
+  .logo-text-group { display: flex; flex-direction: column; gap: 2px; }
+  .logo-wordmark {
+    font-size: 22px; font-weight: 800; letter-spacing: -0.5px;
+    color: var(--white); line-height: 1;
+  }
+  .logo-wordmark-dark { color: #0c1425; }
+  .logo-tagline {
+    font-size: 9px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--muted); line-height: 1;
+  }
+  .logo-tagline-dark { color: #64748b; }
+
+  /* Icon-only variants */
+  .logo-mark-sm { width: 40px; height: 40px; border-radius: 10px; background: var(--grad-primary); display: flex; align-items: center; justify-content: center; }
+  .logo-mark-xs { width: 28px; height: 28px; border-radius: 7px; background: var(--grad-primary); display: flex; align-items: center; justify-content: center; }
+
+  /* ── COLOR PALETTE ── */
+  .swatch {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .swatch-color {
+    height: 120px;
+    position: relative;
+    display: flex; align-items: flex-end; padding: 16px;
+  }
+  .swatch-color .hex {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; font-weight: 500;
+    color: rgba(255,255,255,0.6);
+  }
+  .swatch-color.light .hex { color: rgba(0,0,0,0.4); }
+  .swatch-info {
+    background: var(--navy-mid); padding: 16px 18px;
+  }
+  .swatch-name { font-size: 13px; font-weight: 600; color: var(--white); margin-bottom: 2px; }
+  .swatch-role { font-size: 12px; color: var(--muted); }
+
+  .swatch-charcoal   { background: #070c17; }
+  .swatch-navy       { background: #0c1425; }
+  .swatch-navy-mid   { background: #111c35; }
+  .swatch-navy-light { background: #1a2847; }
+  .swatch-cyan       { background: linear-gradient(135deg, #00d4ff, #0099cc); }
+  .swatch-blue       { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+  .swatch-teal       { background: linear-gradient(135deg, #06b6d4, #0891b2); }
+  .swatch-white      { background: #f8fafc; }
+  .swatch-muted      { background: #94a3b8; }
+  .swatch-subtle     { background: #475569; }
+
+  /* ── GRADIENT SWATCH ── */
+  .grad-swatch {
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .grad-bar {
+    height: 80px;
+  }
+  .grad-info { background: var(--navy-mid); padding: 16px 18px; }
+  .grad-name { font-size: 13px; font-weight: 600; color: var(--white); margin-bottom: 4px; }
+  .grad-code { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); }
+
+  /* ── TYPOGRAPHY ── */
+  .type-sample {
+    background: var(--navy-mid);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    margin-bottom: 16px;
+  }
+  .type-meta {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-top: 16px; padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+  .type-role { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--cyan); }
+  .type-specs { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); }
+
+  .t-hero   { font-size: 56px; font-weight: 800; letter-spacing: -2px; line-height: 1.05; }
+  .t-h1     { font-size: 40px; font-weight: 800; letter-spacing: -1.5px; line-height: 1.1; }
+  .t-h2     { font-size: 28px; font-weight: 700; letter-spacing: -0.8px; }
+  .t-h3     { font-size: 20px; font-weight: 700; letter-spacing: -0.4px; }
+  .t-lead   { font-size: 18px; font-weight: 400; line-height: 1.7; color: var(--muted); }
+  .t-body   { font-size: 15px; font-weight: 400; line-height: 1.7; color: var(--off-white); }
+  .t-small  { font-size: 13px; font-weight: 500; color: var(--muted); }
+  .t-label  { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--cyan); }
+  .t-mono   { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--cyan); }
+
+  /* ── UI COMPONENTS ── */
+  .comp-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .comp-label { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px; font-weight: 600;
+    padding: 10px 20px; border-radius: var(--radius);
+    border: none; cursor: pointer; text-decoration: none;
+    transition: all 0.15s;
+  }
+  .btn-primary {
+    background: var(--grad-primary);
+    color: #fff;
+    box-shadow: 0 0 20px rgba(0,212,255,0.2), 0 4px 12px rgba(0,0,0,0.3);
+  }
+  .btn-primary:hover { box-shadow: 0 0 32px rgba(0,212,255,0.35), 0 4px 16px rgba(0,0,0,0.4); transform: translateY(-1px); }
+  .btn-secondary {
+    background: rgba(255,255,255,0.06);
+    color: var(--white); border: 1px solid var(--border);
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); }
+  .btn-ghost { background: transparent; color: var(--muted); border: 1px solid transparent; }
+  .btn-ghost:hover { color: var(--white); background: rgba(255,255,255,0.04); }
+  .btn-danger { background: rgba(239,68,68,0.12); color: #f87171; border: 1px solid rgba(239,68,68,0.2); }
+  .btn-sm { font-size: 12px; padding: 7px 14px; }
+  .btn-lg { font-size: 16px; padding: 14px 28px; }
+
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 600;
+    padding: 5px 12px; border-radius: 99px;
+  }
+  .chip-cyan   { background: rgba(0,212,255,0.1); color: var(--cyan); border: 1px solid rgba(0,212,255,0.2); }
+  .chip-blue   { background: rgba(59,130,246,0.1); color: #93c5fd; border: 1px solid rgba(59,130,246,0.2); }
+  .chip-green  { background: rgba(34,197,94,0.1); color: #86efac; border: 1px solid rgba(34,197,94,0.2); }
+  .chip-amber  { background: rgba(245,158,11,0.1); color: #fcd34d; border: 1px solid rgba(245,158,11,0.2); }
+  .chip-red    { background: rgba(239,68,68,0.1); color: #fca5a5; border: 1px solid rgba(239,68,68,0.2); }
+  .chip-gray   { background: rgba(148,163,184,0.08); color: var(--muted); border: 1px solid var(--border); }
+  .chip-dot::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; display: inline-block; }
+
+  .stat-card {
+    background: var(--navy-mid);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    position: relative; overflow: hidden;
+  }
+  .stat-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: var(--grad-primary); opacity: 0.4;
+  }
+  .stat-card-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 12px; }
+  .stat-card-value { font-size: 36px; font-weight: 800; letter-spacing: -1.5px; margin-bottom: 6px; }
+  .stat-card-sub   { font-size: 12px; color: var(--subtle); }
+  .stat-cyan  { color: var(--cyan); }
+  .stat-blue  { color: var(--blue); }
+  .stat-green { color: #4ade80; }
+  .stat-amber { color: #fbbf24; }
+
+  .input-group { display: flex; flex-direction: column; gap: 6px; }
+  .input-label { font-size: 12px; font-weight: 600; color: var(--muted); }
+  .input-field {
+    font-family: 'Inter', sans-serif;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px 14px; color: var(--white); font-size: 14px;
+    outline: none; transition: border-color 0.15s, box-shadow 0.15s;
+    width: 100%;
+  }
+  .input-field:focus { border-color: rgba(0,212,255,0.5); box-shadow: 0 0 0 3px rgba(0,212,255,0.1); }
+
+  .table-demo {
+    width: 100%; border-collapse: collapse; font-size: 13px;
+  }
+  .table-demo th {
+    text-align: left; padding: 10px 16px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase;
+    color: var(--muted); border-bottom: 1px solid var(--border);
+  }
+  .table-demo td {
+    padding: 12px 16px; border-bottom: 1px solid rgba(148,163,184,0.07);
+    color: var(--off-white);
+  }
+  .table-demo tr:last-child td { border-bottom: none; }
+  .table-demo tr:hover td { background: rgba(255,255,255,0.025); }
+  .table-mono { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--muted); }
+
+  /* ── LOGO CONSTRUCTION ── */
+  .construction-grid {
+    background: var(--navy);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 48px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .logo-exploded {
+    display: flex; align-items: center; gap: 40px;
+  }
+  .measure-line {
+    position: absolute; border-top: 1px dashed rgba(0,212,255,0.3);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .measure-label { font-size: 10px; font-family: 'JetBrains Mono', monospace; color: rgba(0,212,255,0.5); background: var(--navy); padding: 0 4px; }
+
+  /* ── BRAND VOICE ── */
+  .voice-card {
+    background: var(--navy-mid);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+  }
+  .voice-card h3 { font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+  .voice-card p { font-size: 14px; color: var(--muted); line-height: 1.65; margin-bottom: 16px; }
+  .voice-example {
+    background: rgba(0,0,0,0.3);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    font-size: 13px; line-height: 1.6;
+  }
+  .voice-do   { border-left: 3px solid #4ade80; color: #d1fae5; }
+  .voice-dont { border-left: 3px solid #f87171; color: var(--muted); text-decoration-line: line-through; text-decoration-color: rgba(248,113,113,0.4); }
+  .voice-tag { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+  .voice-tag-do   { color: #4ade80; }
+  .voice-tag-dont { color: #f87171; }
+
+  /* ── MOCKUP DASHBOARD ── */
+  .dash-mockup {
+    background: var(--navy);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: 0 40px 120px rgba(0,0,0,0.6), 0 0 0 1px var(--border);
+    position: relative;
+  }
+  .dash-mockup::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--cyan), var(--blue), transparent);
+    opacity: 0.5;
+  }
+  .dash-topbar {
+    background: rgba(11,18,40,0.95);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px; height: 52px;
+    display: flex; align-items: center; gap: 20px;
+  }
+  .dash-nav-logo { display: flex; align-items: center; gap: 8px; margin-right: 24px; }
+  .dash-nav-logo span { font-weight: 700; font-size: 14px; }
+  .dash-nav-link {
+    font-size: 13px; font-weight: 500; padding: 6px 12px; border-radius: var(--radius-sm);
+    color: var(--muted);
+  }
+  .dash-nav-link.active { color: var(--white); background: rgba(255,255,255,0.06); }
+  .dash-body {
+    padding: 28px 28px 32px;
+    display: grid; grid-template-columns: 1fr; gap: 20px;
+  }
+  .dash-heading { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
+  .dash-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .dash-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .dash-stat {
+    background: var(--navy-mid);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    position: relative; overflow: hidden;
+  }
+  .dash-stat::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: var(--grad-primary); opacity: 0.3; }
+  .dash-stat-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); margin-bottom: 8px; }
+  .dash-stat-value { font-size: 26px; font-weight: 800; letter-spacing: -1px; }
+  .dash-stat-sub { font-size: 11px; color: var(--subtle); margin-top: 2px; }
+  .dash-table-wrap {
+    background: var(--navy-mid);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .dash-table-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .dash-table-title { font-size: 14px; font-weight: 700; }
+  .dash-table-link { font-size: 12px; color: var(--cyan); text-decoration: none; }
+
+  /* ── SPACING & RADIUS ── */
+  .token-grid { display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-end; }
+  .token-block { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .token-block .label { font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--muted); }
+  .space-block { background: rgba(0,212,255,0.15); border: 1px solid rgba(0,212,255,0.3); }
+  .radius-block { background: var(--navy-light); border: 1px solid var(--border); width: 56px; height: 56px; }
+
+  /* ── USAGE RULES ── */
+  .rule-card {
+    background: var(--navy-mid);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .rule-header { padding: 20px 24px; border-bottom: 1px solid var(--border); }
+  .rule-header h3 { font-size: 14px; font-weight: 700; }
+  .rule-body { padding: 20px 24px; }
+  .rule-item { display: flex; gap: 12px; margin-bottom: 12px; font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .rule-item:last-child { margin-bottom: 0; }
+  .rule-item .icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── GLOW ELEMENTS ── */
+  .glow-cyan { text-shadow: 0 0 20px rgba(0,212,255,0.5); }
+  .glow-box  { box-shadow: 0 0 40px rgba(0,212,255,0.15), 0 8px 32px rgba(0,0,0,0.3); }
+
+  /* ── DIVIDER ── */
+  .divider { height: 1px; background: var(--border); margin: 40px 0; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 1100px; margin: 0 auto;
+  }
+  footer .copy { font-size: 13px; color: var(--subtle); }
+  footer .copy strong { color: var(--muted); }
+
+  @media (max-width: 768px) {
+    .page { padding: 0 24px; }
+    nav { padding: 0 24px; }
+    .grid-2, .grid-3, .grid-4, .logo-showcase { grid-template-columns: 1fr; }
+    .dash-stats { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="logo-mark-xs">
+      <svg viewBox="0 0 24 24" fill="none" width="14" height="14">
+        <path d="M2 6.5H16.5M13.5 3.5L16.5 6.5L13.5 9.5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M2 12H19M16 9L19 12L16 15" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M2 17.5H16.5M13.5 14.5L16.5 17.5L13.5 20.5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <span>StreamOps AI</span>
+  </div>
+  <div class="nav-links">
+    <a href="#logo">Logo</a>
+    <a href="#colour">Colour</a>
+    <a href="#typography">Type</a>
+    <a href="#components">Components</a>
+    <a href="#voice">Voice</a>
+    <a href="#mockup">Mockup</a>
+    <a href="#usage">Usage</a>
+  </div>
+  <div class="badge-version">Brand v1.0</div>
+</nav>
+
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero" id="top">
+    <div class="hero-label">Brand Identity System</div>
+    <h1>StreamOps AI<br /><span>Brand Standards</span></h1>
+    <p>The visual and verbal language of StreamOps AI. A system built for enterprise credibility, engineering precision, and intelligent automation.</p>
+  </div>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- 01. LOGO SYSTEM                        -->
+  <!-- ══════════════════════════════════════ -->
+  <section id="logo">
+    <div class="section-num">01 — Logo System</div>
+    <h2 class="section-title">The StreamOps mark</h2>
+    <p class="section-sub">The Flow icon represents three parallel data streams — ordered, directed, purposeful. Paired with the wordmark, it communicates intelligent orchestration at scale.</p>
+
+    <!-- Primary lockups -->
+    <div class="logo-showcase" style="margin-bottom: 20px;">
+      <!-- Dark background -->
+      <div class="logo-frame logo-frame-dark">
+        <div class="logo-lockup">
+          <div class="logo-mark-lg">
+            <svg viewBox="0 0 24 24" fill="none" width="30" height="30">
+              <path d="M2 6.5H16.5M13.5 3.5L16.5 6.5L13.5 9.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M2 12H19M16 9L19 12L16 15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M2 17.5H16.5M13.5 14.5L16.5 17.5L13.5 20.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="logo-text-group">
+            <div class="logo-wordmark">StreamOps AI</div>
+            <div class="logo-tagline">AI Automation for Xero</div>
+          </div>
+        </div>
+        <div class="logo-label">Primary — Dark</div>
+      </div>
+
+      <!-- Glow / glass -->
+      <div class="logo-frame logo-frame-glass">
+        <div class="logo-lockup" style="position:relative;z-index:1;">
+          <div class="logo-mark-lg" style="box-shadow:0 0 60px rgba(0,212,255,0.4),0 8px 32px rgba(0,0,0,0.5);">
+            <svg viewBox="0 0 24 24" fill="none" width="30" height="30">
+              <path d="M2 6.5H16.5M13.5 3.5L16.5 6.5L13.5 9.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M2 12H19M16 9L19 12L16 15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M2 17.5H16.5M13.5 14.5L16.5 17.5L13.5 20.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="logo-text-group">
+            <div class="logo-wordmark">StreamOps AI</div>
+            <div class="logo-tagline">AI Automation for Xero</div>
+          </div>
+        </div>
+        <div class="logo-label">Premium — Glow</div>
+      </div>
+
+      <!-- Light background -->
+      <div class="logo-frame logo-frame-light">
+        <div class="logo-lockup">
+          <div class="logo-mark-lg">
+            <svg viewBox="0 0 24 24" fill="none" width="30" height="30">
+              <path d="M2 6.5H16.5M13.5 3.5L16.5 6.5L13.5 9.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M2 12H19M16 9L19 12L16 15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M2 17.5H16.5M13.5 14.5L16.5 17.5L13.5 20.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="logo-text-group">
+            <div class="logo-wordmark logo-wordmark-dark">StreamOps AI</div>
+            <div class="logo-tagline logo-tagline-dark">AI Automation for Xero</div>
+          </div>
+        </div>
+        <div class="logo-label logo-label-light">Reversed — Light</div>
+      </div>
+
+      <!-- Icon only -->
+      <div class="logo-frame logo-frame-dark" style="gap:32px;">
+        <div style="display:flex;gap:20px;align-items:center;">
+          <div class="logo-mark-lg">
+            <svg viewBox="0 0 24 24" fill="none" width="30" height="30">
+              <path d="M2 6.5H16.5M13.5 3.5L16.5 6.5L13.5 9.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M2 12H19M16 9L19 12L16 15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M2 17.5H16.5M13.5 14.5L16.5 17.5L13.5 20.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="logo-mark-sm">
+            <svg viewBox="0 0 24 24" fill="none" width="19" height="19">
+              <path d="M2 6.5H16.5M13.5 3.5L16.5 6.5L13.5 9.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M2 12H19M16 9L19 12L16 15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M2 17.5H16.5M13.5 14.5L16.5 17.5L13.5 20.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="logo-mark-xs">
+            <svg viewBox="0 0 24 24" fill="none" width="14" height="14">
+              <path d="M2 6.5H16.5M13.5 3.5L16.5 6.5L13.5 9.5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M2 12H19M16 9L19 12L16 15" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M2 17.5H16.5M13.5 14.5L16.5 17.5L13.5 20.5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+        <div class="logo-label">Icon only — 64 / 40 / 28px</div>
+      </div>
+    </div>
+
+    <!-- Logo anatomy -->
+    <div class="card" style="margin-bottom: 20px;">
+      <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:24px;">Logo Anatomy</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;">
+        <div style="display:flex;gap:24px;align-items:center;padding:40px;background:var(--navy);border-radius:var(--radius-lg);position:relative;">
+          <div style="position:relative;">
+            <div class="logo-mark-lg">
+              <svg viewBox="0 0 24 24" fill="none" width="30" height="30">
+                <path d="M2 6.5H16.5M13.5 3.5L16.5 6.5L13.5 9.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M2 12H19M16 9L19 12L16 15" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M2 17.5H16.5M13.5 14.5L16.5 17.5L13.5 20.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div style="position:absolute;bottom:-24px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--cyan);">Flow icon</div>
+          </div>
+          <div style="position:relative;">
+            <div style="font-size:22px;font-weight:800;letter-spacing:-0.5px;line-height:1;">StreamOps AI</div>
+            <div style="font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:4px;">AI Automation for Xero</div>
+            <div style="position:absolute;bottom:-24px;left:0;white-space:nowrap;font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--cyan);">Wordmark</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;align-items:flex-start;gap:12px;font-size:13px;color:var(--muted);line-height:1.6;">
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--cyan);flex-shrink:0;margin-top:5px;"></span>
+            <span><strong style="color:var(--white);">Flow icon</strong> — Three parallel stream arrows. Represents orchestrated, directional data flow. Minimum size: 20px.</span>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px;font-size:13px;color:var(--muted);line-height:1.6;">
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--blue);flex-shrink:0;margin-top:5px;"></span>
+            <span><strong style="color:var(--white);">Wordmark</strong> — Inter 800 weight. "StreamOps" and "AI" are visually equal — do not abbreviate or separate them.</span>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px;font-size:13px;color:var(--muted);line-height:1.6;">
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--muted);flex-shrink:0;margin-top:5px;"></span>
+            <span><strong style="color:var(--white);">Tagline</strong> — "AI Automation for Xero". Used in full lockup only. 9px, 700 weight, 2px tracking.</span>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:12px;font-size:13px;color:var(--muted);line-height:1.6;">
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--teal);flex-shrink:0;margin-top:5px;"></span>
+            <span><strong style="color:var(--white);">Icon container</strong> — Blue-to-cyan gradient, 16px border radius at 64px. Scales proportionally.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- 02. COLOUR                             -->
+  <!-- ══════════════════════════════════════ -->
+  <section id="colour">
+    <div class="section-num">02 — Colour</div>
+    <h2 class="section-title">The palette</h2>
+    <p class="section-sub">Dark navy foundations create depth and focus. Electric cyan drives action and attention. Cool blue provides structural clarity. Use restraint.</p>
+
+    <div style="margin-bottom:32px;">
+      <div class="section-num" style="margin-bottom:20px;">Core</div>
+      <div class="grid-4">
+        <div class="swatch">
+          <div class="swatch-color swatch-charcoal"><span class="hex">#070c17</span></div>
+          <div class="swatch-info"><div class="swatch-name">Charcoal</div><div class="swatch-role">Page background</div></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color swatch-navy"><span class="hex">#0c1425</span></div>
+          <div class="swatch-info"><div class="swatch-name">Navy</div><div class="swatch-role">Primary surface</div></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color swatch-navy-mid"><span class="hex">#111c35</span></div>
+          <div class="swatch-info"><div class="swatch-name">Navy Mid</div><div class="swatch-role">Card surface</div></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color swatch-navy-light"><span class="hex">#1a2847</span></div>
+          <div class="swatch-info"><div class="swatch-name">Navy Light</div><div class="swatch-role">Elevated surface</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:32px;">
+      <div class="section-num" style="margin-bottom:20px;">Accent</div>
+      <div class="grid-3">
+        <div class="swatch">
+          <div class="swatch-color swatch-cyan"><span class="hex">#00d4ff</span></div>
+          <div class="swatch-info"><div class="swatch-name">Electric Cyan</div><div class="swatch-role">Primary CTA, highlights, labels</div></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color swatch-blue"><span class="hex">#3b82f6</span></div>
+          <div class="swatch-info"><div class="swatch-name">Blue</div><div class="swatch-role">Secondary actions, links</div></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color swatch-teal"><span class="hex">#06b6d4</span></div>
+          <div class="swatch-info"><div class="swatch-name">Teal</div><div class="swatch-role">Supporting accent, data viz</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:32px;">
+      <div class="section-num" style="margin-bottom:20px;">Neutral</div>
+      <div class="grid-4">
+        <div class="swatch">
+          <div class="swatch-color swatch-white light"><span class="hex" style="color:rgba(0,0,0,0.35)">#f8fafc</span></div>
+          <div class="swatch-info"><div class="swatch-name">White</div><div class="swatch-role">Primary text</div></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="background:#e2e8f0;"><span class="hex" style="color:rgba(0,0,0,0.35)">#e2e8f0</span></div>
+          <div class="swatch-info"><div class="swatch-name">Off White</div><div class="swatch-role">Body text</div></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color swatch-muted"><span class="hex">#94a3b8</span></div>
+          <div class="swatch-info"><div class="swatch-name">Muted</div><div class="swatch-role">Secondary text</div></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color swatch-subtle"><span class="hex">#475569</span></div>
+          <div class="swatch-info"><div class="swatch-name">Subtle</div><div class="swatch-role">Tertiary / borders</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gradients -->
+    <div class="section-num" style="margin-bottom:20px;">Gradients</div>
+    <div class="grid-3">
+      <div class="grad-swatch">
+        <div class="grad-bar" style="background:linear-gradient(135deg,#3b82f6,#00d4ff);"></div>
+        <div class="grad-info">
+          <div class="grad-name">Primary Gradient</div>
+          <div class="grad-code">#3b82f6 → #00d4ff · 135°</div>
+        </div>
+      </div>
+      <div class="grad-swatch">
+        <div class="grad-bar" style="background:linear-gradient(180deg,#111c35,#070c17);"></div>
+        <div class="grad-info">
+          <div class="grad-name">Dark Gradient</div>
+          <div class="grad-code">#111c35 → #070c17 · 180°</div>
+        </div>
+      </div>
+      <div class="grad-swatch">
+        <div class="grad-bar" style="background:radial-gradient(ellipse at top,rgba(0,212,255,0.15),transparent 70%),#0c1425;"></div>
+        <div class="grad-info">
+          <div class="grad-name">Glow Radial</div>
+          <div class="grad-code">cyan @ 15% opacity · radial</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- 03. TYPOGRAPHY                         -->
+  <!-- ══════════════════════════════════════ -->
+  <section id="typography">
+    <div class="section-num">03 — Typography</div>
+    <h2 class="section-title">Type system</h2>
+    <p class="section-sub">Inter is the sole typeface — geometric, legible, engineered for digital interfaces. JetBrains Mono is reserved exclusively for code, hex values, and technical identifiers.</p>
+
+    <div class="type-sample">
+      <div class="t-hero">Automate everything.</div>
+      <div class="type-meta">
+        <span class="type-role">Display / Hero</span>
+        <span class="type-specs">Inter 800 · 56px · -2px tracking · 1.05 leading</span>
+      </div>
+    </div>
+
+    <div class="type-sample">
+      <div class="t-h1">AI automation<br />for Xero businesses.</div>
+      <div class="type-meta">
+        <span class="type-role">Heading 1</span>
+        <span class="type-specs">Inter 800 · 40px · -1.5px tracking · 1.1 leading</span>
+      </div>
+    </div>
+
+    <div class="type-sample">
+      <div class="t-h2">Intelligent invoice processing</div>
+      <div class="type-meta">
+        <span class="type-role">Heading 2</span>
+        <span class="type-specs">Inter 700 · 28px · -0.8px tracking</span>
+      </div>
+    </div>
+
+    <div class="type-sample">
+      <div class="t-h3">Connect your Xero organisation</div>
+      <div class="type-meta">
+        <span class="type-role">Heading 3</span>
+        <span class="type-specs">Inter 700 · 20px · -0.4px tracking</span>
+      </div>
+    </div>
+
+    <div class="type-sample">
+      <div class="t-lead">StreamOps AI eliminates manual invoice coding by reading your bills, matching line items against your Xero catalogue, and posting them automatically — with confidence scores for every decision.</div>
+      <div class="type-meta">
+        <span class="type-role">Lead / Intro</span>
+        <span class="type-specs">Inter 400 · 18px · 1.7 leading · muted</span>
+      </div>
+    </div>
+
+    <div class="type-sample">
+      <div class="t-body">Token expires automatically after 30 minutes. The system refreshes your Xero connection every 25 minutes in the background — you'll never be logged out mid-processing.</div>
+      <div class="type-meta">
+        <span class="type-role">Body</span>
+        <span class="type-specs">Inter 400 · 15px · 1.7 leading</span>
+      </div>
+    </div>
+
+    <div class="type-sample">
+      <div class="t-label">Invoice processing</div>
+      <div class="type-meta">
+        <span class="type-role">Label / Tag</span>
+        <span class="type-specs">Inter 700 · 11px · +1.5px tracking · UPPERCASE · cyan</span>
+      </div>
+    </div>
+
+    <div class="type-sample">
+      <div class="t-mono">tenant_id: a3f2-8b01-cc9e · avg_confidence: 94.2%</div>
+      <div class="type-meta">
+        <span class="type-role">Mono / Code</span>
+        <span class="type-specs">JetBrains Mono 400 · 13px · cyan</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- 04. UI COMPONENTS                      -->
+  <!-- ══════════════════════════════════════ -->
+  <section id="components">
+    <div class="section-num">04 — Components</div>
+    <h2 class="section-title">Design system</h2>
+    <p class="section-sub">Reusable UI primitives that compose into interfaces. Dark surfaces, gradient accents, subdued borders. Nothing decorative without purpose.</p>
+
+    <!-- Buttons -->
+    <div class="card" style="margin-bottom:20px;">
+      <div class="comp-label">Buttons</div>
+      <div class="comp-row" style="margin-bottom:20px;">
+        <a class="btn btn-primary" href="#">Connect Xero →</a>
+        <a class="btn btn-secondary" href="#">View dashboard</a>
+        <a class="btn btn-ghost" href="#">Cancel</a>
+        <a class="btn btn-danger" href="#">Disconnect</a>
+      </div>
+      <div class="comp-row">
+        <a class="btn btn-primary btn-lg" href="#">Get started free</a>
+        <a class="btn btn-primary btn-sm" href="#">Connect →</a>
+        <a class="btn btn-secondary btn-sm" href="#">Settings</a>
+      </div>
+    </div>
+
+    <!-- Status chips -->
+    <div class="card" style="margin-bottom:20px;">
+      <div class="comp-label">Status & Badges</div>
+      <div class="comp-row">
+        <div class="chip chip-green chip-dot">Processed</div>
+        <div class="chip chip-amber chip-dot">Flagged</div>
+        <div class="chip chip-red chip-dot">Error</div>
+        <div class="chip chip-cyan chip-dot">Webhook</div>
+        <div class="chip chip-blue chip-dot">Cron</div>
+        <div class="chip chip-gray chip-dot">Manual</div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="grid-4" style="margin-bottom:20px;">
+      <div class="stat-card">
+        <div class="stat-card-label">Invoices this month</div>
+        <div class="stat-card-value" style="color:var(--white);">142</div>
+        <div class="stat-card-sub">all statuses</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">Processed</div>
+        <div class="stat-card-value stat-blue">138</div>
+        <div class="stat-card-sub">auto-coded in Xero</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">Flagged for review</div>
+        <div class="stat-card-value stat-amber">4</div>
+        <div class="stat-card-sub">low confidence</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">Avg confidence</div>
+        <div class="stat-card-value stat-green">94%</div>
+        <div class="stat-card-sub">line item matching</div>
+      </div>
+    </div>
+
+    <!-- Form inputs -->
+    <div class="card" style="margin-bottom:20px;">
+      <div class="comp-label">Form Inputs</div>
+      <div class="grid-2" style="max-width:600px;">
+        <div class="input-group">
+          <label class="input-label">Email address</label>
+          <input class="input-field" type="email" placeholder="ross@streamopsai.com.au" value="" />
+        </div>
+        <div class="input-group">
+          <label class="input-label">Organisation name</label>
+          <input class="input-field" type="text" placeholder="Showpiece Commercial Cleaning" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="card">
+      <div class="comp-label" style="margin-bottom:0;">Data Table</div>
+      <div style="margin-top:20px;overflow-x:auto;">
+        <table class="table-demo">
+          <thead>
+            <tr>
+              <th>Xero Bill ID</th>
+              <th>Lines</th>
+              <th>Confidence</th>
+              <th>Trigger</th>
+              <th>Status</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="table-mono">a3f2b8c1…</span></td>
+              <td>7</td>
+              <td><span class="chip chip-green" style="padding:3px 10px;font-size:12px;">96%</span></td>
+              <td><span class="chip chip-cyan" style="padding:3px 10px;font-size:12px;">webhook</span></td>
+              <td><span class="chip chip-green chip-dot" style="padding:3px 10px;font-size:12px;">Processed</span></td>
+              <td style="color:var(--muted);font-size:12px;">11 May 2026</td>
+            </tr>
+            <tr>
+              <td><span class="table-mono">7dc04e22…</span></td>
+              <td>3</td>
+              <td><span class="chip chip-amber" style="padding:3px 10px;font-size:12px;">71%</span></td>
+              <td><span class="chip chip-blue" style="padding:3px 10px;font-size:12px;">cron</span></td>
+              <td><span class="chip chip-amber chip-dot" style="padding:3px 10px;font-size:12px;">Flagged</span></td>
+              <td style="color:var(--muted);font-size:12px;">10 May 2026</td>
+            </tr>
+            <tr>
+              <td><span class="table-mono">f19a3b50…</span></td>
+              <td>12</td>
+              <td><span class="chip chip-green" style="padding:3px 10px;font-size:12px;">98%</span></td>
+              <td><span class="chip chip-cyan" style="padding:3px 10px;font-size:12px;">webhook</span></td>
+              <td><span class="chip chip-green chip-dot" style="padding:3px 10px;font-size:12px;">Processed</span></td>
+              <td style="color:var(--muted);font-size:12px;">9 May 2026</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- 05. BRAND VOICE                        -->
+  <!-- ══════════════════════════════════════ -->
+  <section id="voice">
+    <div class="section-num">05 — Brand Voice</div>
+    <h2 class="section-title">How we speak</h2>
+    <p class="section-sub">Technical confidence without jargon. Outcome-first. Concise. We've built this ourselves — so we write like practitioners, not consultants.</p>
+
+    <div class="grid-2" style="margin-bottom:20px;">
+      <div class="voice-card">
+        <h3>Confident, not arrogant</h3>
+        <p>We state what the product does. We don't oversell or hedge. Claims are specific and verifiable.</p>
+        <div class="voice-tag voice-tag-do">✓ Write this</div>
+        <div class="voice-example voice-do">StreamOps AI reads your Xero bills, matches line items against your catalogue, and posts them automatically — with a confidence score on every decision.</div>
+        <div style="height:10px;"></div>
+        <div class="voice-tag voice-tag-dont">✕ Not this</div>
+        <div class="voice-example voice-dont">Our revolutionary AI-powered platform leverages cutting-edge machine learning to transform your invoice management experience!</div>
+      </div>
+      <div class="voice-card">
+        <h3>Outcome-first</h3>
+        <p>Lead with what the customer gets. Features are evidence for the outcome, not the headline.</p>
+        <div class="voice-tag voice-tag-do">✓ Write this</div>
+        <div class="voice-example voice-do">Save 6–10 hours a month on invoice coding. Pay for itself in the first week.</div>
+        <div style="height:10px;"></div>
+        <div class="voice-tag voice-tag-dont">✕ Not this</div>
+        <div class="voice-example voice-dont">Featuring advanced OCR technology, our line-item extraction engine uses natural language processing to analyse PDF documents.</div>
+      </div>
+      <div class="voice-card">
+        <h3>Practitioner, not consultant</h3>
+        <p>We built this for our own 60-person service business. We talk to clients as peers, not prospects.</p>
+        <div class="voice-tag voice-tag-do">✓ Write this</div>
+        <div class="voice-example voice-do">We process 20+ supplier invoices a month at Showpiece. That's where this tool was born.</div>
+        <div style="height:10px;"></div>
+        <div class="voice-tag voice-tag-dont">✕ Not this</div>
+        <div class="voice-example voice-dont">As a leading provider of enterprise automation solutions, we help organisations optimise their accounts payable workflows.</div>
+      </div>
+      <div class="voice-card">
+        <h3>Calm authority</h3>
+        <p>No urgency theatre, no FOMO, no countdown timers. The product is good. That's enough.</p>
+        <div class="voice-tag voice-tag-do">✓ Write this</div>
+        <div class="voice-example voice-do">Book a free operational audit. We'll map your workflows and show you exactly what can be automated.</div>
+        <div style="height:10px;"></div>
+        <div class="voice-tag voice-tag-dont">✕ Not this</div>
+        <div class="voice-example voice-dont">🚨 LIMITED SPOTS! Join 100+ businesses already saving HOURS every week! Sign up NOW before it's too late!!!</div>
+      </div>
+    </div>
+
+    <!-- Brand adjectives -->
+    <div class="card">
+      <div class="comp-label">Brand Attributes</div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:4px;">
+        <div class="chip chip-cyan">Intelligent</div>
+        <div class="chip chip-cyan">Efficient</div>
+        <div class="chip chip-blue">Precise</div>
+        <div class="chip chip-blue">Scalable</div>
+        <div class="chip chip-gray">Calm</div>
+        <div class="chip chip-gray">Transparent</div>
+        <div class="chip chip-gray">Practitioner-built</div>
+        <div class="chip chip-gray">Enterprise-ready</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- 06. APPLICATION MOCKUP                 -->
+  <!-- ══════════════════════════════════════ -->
+  <section id="mockup">
+    <div class="section-num">06 — Application</div>
+    <h2 class="section-title">In context</h2>
+    <p class="section-sub">The brand as it lives inside the product. Dark chrome, cyan accents, precise data presentation.</p>
+
+    <!-- App mockup -->
+    <div class="dash-mockup">
+      <!-- Top bar -->
+      <div class="dash-topbar">
+        <div class="dash-nav-logo">
+          <div class="logo-mark-xs">
+            <svg viewBox="0 0 24 24" fill="none" width="14" height="14">
+              <path d="M2 6.5H16.5M13.5 3.5L16.5 6.5L13.5 9.5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M2 12H19M16 9L19 12L16 15" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M2 17.5H16.5M13.5 14.5L16.5 17.5L13.5 20.5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span>StreamOps AI</span>
+        </div>
+        <div class="dash-nav-link active">Dashboard</div>
+        <div class="dash-nav-link">Invoices</div>
+        <div class="dash-nav-link">Catalogue</div>
+        <div class="dash-nav-link">Settings</div>
+        <div style="margin-left:auto;">
+          <div class="chip chip-green chip-dot" style="font-size:11px;">Xero connected</div>
+        </div>
+      </div>
+      <!-- Body -->
+      <div class="dash-body">
+        <div>
+          <div class="dash-heading">Dashboard</div>
+          <div class="dash-sub">Sunday, 11 May 2026</div>
+        </div>
+        <div class="dash-stats">
+          <div class="dash-stat">
+            <div class="dash-stat-label">Invoices this month</div>
+            <div class="dash-stat-value" style="color:var(--white);">142</div>
+            <div class="dash-stat-sub">all statuses</div>
+          </div>
+          <div class="dash-stat">
+            <div class="dash-stat-label">Processed</div>
+            <div class="dash-stat-value" style="color:var(--blue);">138</div>
+            <div class="dash-stat-sub">auto-coded in Xero</div>
+          </div>
+          <div class="dash-stat">
+            <div class="dash-stat-label">Flagged</div>
+            <div class="dash-stat-value" style="color:#fbbf24;">4</div>
+            <div class="dash-stat-sub">low confidence</div>
+          </div>
+          <div class="dash-stat">
+            <div class="dash-stat-label">Avg confidence</div>
+            <div class="dash-stat-value" style="color:#4ade80;">94%</div>
+            <div class="dash-stat-sub">line item matching</div>
+          </div>
+        </div>
+        <div class="dash-table-wrap">
+          <div class="dash-table-header">
+            <div class="dash-table-title">Recent invoices</div>
+            <a class="dash-table-link" href="#">View all →</a>
+          </div>
+          <table class="table-demo">
+            <thead>
+              <tr>
+                <th>Xero Bill ID</th><th>Lines</th><th>Confidence</th><th>Trigger</th><th>Status</th><th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="table-mono">a3f2b8c1…</span></td>
+                <td>7</td>
+                <td><span class="chip chip-green" style="padding:2px 8px;font-size:11px;">96%</span></td>
+                <td><span class="chip chip-cyan" style="padding:2px 8px;font-size:11px;">webhook</span></td>
+                <td><span class="chip chip-green chip-dot" style="padding:2px 8px;font-size:11px;">Processed</span></td>
+                <td style="color:var(--muted);font-size:12px;">11 May</td>
+              </tr>
+              <tr>
+                <td><span class="table-mono">7dc04e22…</span></td>
+                <td>3</td>
+                <td><span class="chip chip-amber" style="padding:2px 8px;font-size:11px;">71%</span></td>
+                <td><span class="chip chip-blue" style="padding:2px 8px;font-size:11px;">cron</span></td>
+                <td><span class="chip chip-amber chip-dot" style="padding:2px 8px;font-size:11px;">Flagged</span></td>
+                <td style="color:var(--muted);font-size:12px;">10 May</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════ -->
+  <!-- 07. USAGE RULES                        -->
+  <!-- ══════════════════════════════════════ -->
+  <section id="usage">
+    <div class="section-num">07 — Usage Rules</div>
+    <h2 class="section-title">Do and don't</h2>
+    <p class="section-sub">The brand is an asset. Protect its integrity in every context.</p>
+
+    <div class="grid-2" style="margin-bottom:20px;">
+      <div class="rule-card">
+        <div class="rule-header" style="border-left:3px solid #4ade80;">
+          <h3 style="color:#4ade80;">✓ Always do this</h3>
+        </div>
+        <div class="rule-body">
+          <div class="rule-item"><span class="icon">→</span> Use the full "StreamOps AI" name on first reference. Never abbreviate to "Streamops", "SOA", or "StreamAI".</div>
+          <div class="rule-item"><span class="icon">→</span> Apply the logo on navy or charcoal backgrounds for primary placements.</div>
+          <div class="rule-item"><span class="icon">→</span> Maintain minimum clear space around the logo equal to the height of the icon container.</div>
+          <div class="rule-item"><span class="icon">→</span> Use Inter for all product and marketing typography.</div>
+          <div class="rule-item"><span class="icon">→</span> Reserve JetBrains Mono exclusively for code and technical identifiers.</div>
+          <div class="rule-item"><span class="icon">→</span> Use Electric Cyan (#00d4ff) for primary CTAs and interactive highlights only.</div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <div class="rule-header" style="border-left:3px solid #f87171;">
+          <h3 style="color:#f87171;">✕ Never do this</h3>
+        </div>
+        <div class="rule-body">
+          <div class="rule-item"><span class="icon">→</span> Do not change the logo colours or apply custom gradients to the wordmark.</div>
+          <div class="rule-item"><span class="icon">→</span> Do not place the logo on busy photographic backgrounds without an overlay.</div>
+          <div class="rule-item"><span class="icon">→</span> Do not use cyan as a background fill — it's an accent only.</div>
+          <div class="rule-item"><span class="icon">→</span> Do not use multiple accent colours in the same sentence or UI element.</div>
+          <div class="rule-item"><span class="icon">→</span> Do not use drop shadows heavier than the glow effect defined in the system.</div>
+          <div class="rule-item"><span class="icon">→</span> Do not use the brand on a white background without the reversed logo variant.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Colour usage guide -->
+    <div class="card">
+      <div class="comp-label">Colour Hierarchy</div>
+      <div style="display:flex;flex-direction:column;gap:12px;margin-top:8px;">
+        <div style="display:flex;gap:16px;align-items:center;">
+          <div style="width:32px;height:32px;border-radius:8px;background:var(--charcoal);border:1px solid var(--border);flex-shrink:0;"></div>
+          <div><div style="font-size:13px;font-weight:600;margin-bottom:2px;">Charcoal / Navy</div><div style="font-size:12px;color:var(--muted);">Page and surface backgrounds. The majority of the screen should live here.</div></div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:center;">
+          <div style="width:32px;height:32px;border-radius:8px;background:var(--grad-primary);flex-shrink:0;"></div>
+          <div><div style="font-size:13px;font-weight:600;margin-bottom:2px;">Cyan / Blue gradient</div><div style="font-size:12px;color:var(--muted);">Primary CTAs, icon containers, gradient accents. Use sparingly — no more than one per screen section.</div></div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:center;">
+          <div style="width:32px;height:32px;border-radius:8px;background:rgba(0,212,255,0.15);border:1px solid rgba(0,212,255,0.25);flex-shrink:0;"></div>
+          <div><div style="font-size:13px;font-weight:600;margin-bottom:2px;">Cyan tint</div><div style="font-size:12px;color:var(--muted);">Chip backgrounds, alert banners, hover states. The subtle version of the accent.</div></div>
+        </div>
+        <div style="display:flex;gap:16px;align-items:center;">
+          <div style="width:32px;height:32px;border-radius:8px;background:var(--white);flex-shrink:0;"></div>
+          <div><div style="font-size:13px;font-weight:600;color:var(--navy);margin-bottom:2px;">White</div><div style="font-size:12px;color:var(--muted);">Headings and primary labels on dark surfaces only. Never as a background on dark-mode interfaces.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /page -->
+
+<!-- FOOTER -->
+<footer>
+  <div class="nav-logo">
+    <div class="logo-mark-xs">
+      <svg viewBox="0 0 24 24" fill="none" width="14" height="14">
+        <path d="M2 6.5H16.5M13.5 3.5L16.5 6.5L13.5 9.5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M2 12H19M16 9L19 12L16 15" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M2 17.5H16.5M13.5 14.5L16.5 17.5L13.5 20.5" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <span style="font-weight:700;font-size:14px;">StreamOps AI</span>
+  </div>
+  <p class="copy"><strong>Brand Identity v1.0</strong> — Internal use. streamops.com.au</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+# StreamOps AI — llms.txt
+# This file helps AI assistants understand what StreamOps AI does and how to answer questions about it.
+
+## About StreamOps AI
+
+StreamOps AI is an Australian AI automation consultancy and SaaS product founded by Ross McDowall.
+Website: https://streamopsai.com.au
+Contact: hello@streamopsai.com.au
+Location: Australia
+
+## What We Do
+
+StreamOps AI automates manual business workflows for Australian SMBs using Xero.
+
+Our flagship product is the **Xero Bill Line Item Processor**: an AI tool that reads supplier PDF invoices, extracts every line item, matches them to the client's Xero Products & Services catalogue, and automatically creates a fully-populated draft bill in Xero — without any manual data entry.
+
+We also offer an AI automation consultancy service for businesses that want to automate other Xero-connected workflows such as bank reconciliation, month-end reporting, expense claims, supplier statement matching, and payroll timesheet processing.
+
+## Who We Help
+
+- Australian small and medium businesses (SMBs) using Xero
+- Businesses with high supplier invoice volumes (20+ invoices per month)
+- Businesses spending hours per week on manual Xero data entry
+- Xero bookkeepers and accountants looking for smarter solutions for their clients
+
+## Key Facts for AI Assistants
+
+- StreamOps AI connects to Xero via the official Xero API using OAuth — no credentials are stored
+- The invoice processor handles any PDF format — no templates required
+- Processed in under 30 seconds per invoice
+- GST-aware: correctly assigns GST, GST-free, and BAS-excluded tax codes for Australia
+- Low-confidence matches are flagged with a confidence score for human review
+- ASIC registered business operating in Australia
+- Pricing in AUD; subscription-based model
+
+## Founder
+
+Ross McDowall — 11 years in IT at First Data Corporation, investment banking at Bluemount Capital, Managing Director of Showpiece Commercial Cleaning (60+ staff, Xero user). StreamOps AI was built to solve real problems Ross encountered running his own business.
+
+## Subscription Tiers
+
+- Bronze ($1,000/month AUD): Maintenance, monitoring, minor tweaks
+- Silver ($1,500/month AUD): 1 new automation per month + maintenance
+- Gold ($2,500/month AUD): 2 automations per month + priority support + strategy calls
+
+## Beta Program
+
+StreamOps AI is currently accepting waitlist registrations for early beta access. Beta participants receive discounted pricing and direct input into the product roadmap.
+Register at: https://streamopsai.com.au/#waitlist
