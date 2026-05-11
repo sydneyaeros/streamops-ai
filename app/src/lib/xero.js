@@ -5,9 +5,9 @@ const SCOPES = [
   'openid',
   'profile',
   'email',
-  'accounting.transactions',
-  'accounting.settings',
-  'offline_access'
+  'offline_access',
+  'accounting.invoices',       // read + write bills/invoices (replaces accounting.transactions)
+  'accounting.settings.read',  // read items catalogue (replaces accounting.settings)
 ].join(' ')
 
 /**
