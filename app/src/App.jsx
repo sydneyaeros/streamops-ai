@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import ProtectedRoute from './components/ProtectedRoute'
 import Login        from './pages/Login'
+import AuthCallback from './pages/AuthCallback'
 import Dashboard    from './pages/Dashboard'
 import Settings     from './pages/Settings'
 import XeroCallback from './pages/XeroCallback'
@@ -11,6 +12,7 @@ export default function App() {
       <Routes>
         {/* Public */}
         <Route path="/login"                  element={<Login />} />
+        <Route path="/auth/callback"          element={<AuthCallback />} />
         <Route path="/auth/xero/callback"     element={<XeroCallback />} />
 
         {/* Protected */}

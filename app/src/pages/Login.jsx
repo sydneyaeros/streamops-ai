@@ -27,7 +27,7 @@ export default function Login() {
 
     const { error } = await supabase.auth.signInWithOtp({
       email,
-      options: { emailRedirectTo: `${import.meta.env.VITE_APP_URL}/dashboard` }
+      options: { emailRedirectTo: `${import.meta.env.VITE_APP_URL}/auth/callback` }
     })
 
     if (error) {
