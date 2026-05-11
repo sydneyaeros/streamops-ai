@@ -32,7 +32,11 @@ export function redirectToXero() {
     scope:         SCOPES,
     state
   })
-  window.location.href = `https://login.xero.com/identity/connect/authorize?${params}`
+  const url = `https://login.xero.com/identity/connect/authorize?${params}`
+  console.log('Xero OAuth URL:', url)
+  console.log('Client ID:', JSON.stringify(CLIENT_ID))
+  console.log('Redirect URI:', JSON.stringify(REDIRECT_URI))
+  window.location.href = url
 }
 
 /**
