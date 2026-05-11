@@ -46,16 +46,28 @@ serve(async (req: Request) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     )
 
-    // ── Route: cron safety net ────────────────────────────────────────────────
+    // ── Route: cron safety net (internal, no signature required) ─────────────
     if (payload.trigger === 'cron') {
       await handleCron(supabase)
       return okResponse('Cron scan complete')
     }
 
+    // ── HMAC validation for all Xero webhook requests ─────────────────────────
+    // Xero sends an intentionally bad signature during "intent to receive"
+    // validation — we MUST return 401 for invalid sigs, 200 for valid ones.
+    const webhookKey = Deno.env.get('XERO_WEBHOOK_KEY')
+    if (webhookKey) {
+      const sig = req.headers.get('x-xero-signature')
+      if (!sig || !(await verifyHmac(webhookKey, rawBody, sig))) {
+        console.log('HMAC validation failed — returning 401')
+        return new Response('Unauthorized', { status: 401, headers: corsHeaders })
+      }
+    }
+
     // ── Route: Xero webhook ───────────────────────────────────────────────────
-    // Xero sends events for ALL tenants under our app — we need to fan out
     const events = (payload.events as XeroEvent[]) ?? []
     if (!events.length) {
+      // Valid signature, empty events — this is the final intent-to-receive confirmation
       return okResponse('No events')
     }
 
@@ -403,6 +415,27 @@ async function logResult(
     raw_payload:    rawPayload ?? null,
     error_message:  error ?? null,
   })
+}
+
+
+// ── HMAC-SHA256 signature verification ───────────────────────────────────────
+async function verifyHmac(key: string, body: string, signature: string): Promise<boolean> {
+  try {
+    const encoder   = new TextEncoder()
+    const cryptoKey = await crypto.subtle.importKey(
+      'raw',
+      encoder.encode(key),
+      { name: 'HMAC', hash: 'SHA-256' },
+      false,
+      ['sign']
+    )
+    const signatureBuffer   = await crypto.subtle.sign('HMAC', cryptoKey, encoder.encode(body))
+    const computedSignature = btoa(String.fromCharCode(...new Uint8Array(signatureBuffer)))
+    return computedSignature === signature
+  } catch (err) {
+    console.error('verifyHmac error:', err)
+    return false
+  }
 }
 
 

@@ -10,6 +10,9 @@ export default function Settings() {
   const [user,         setUser]         = useState(null)
   const [loading,      setLoading]      = useState(true)
   const [disconnecting,setDisconnecting]= useState(false)
+  const [catalogueCount, setCatalogueCount] = useState(null)
+  const [syncing,      setSyncing]      = useState(false)
+  const [syncResult,   setSyncResult]   = useState(null)
   const justConnected = searchParams.get('connected') === 'true'
 
   useEffect(() => {
@@ -24,11 +27,33 @@ export default function Settings() {
           .eq('tenant_id', user.id)
           .maybeSingle()
         setXero(data)
+
+        const { count } = await supabase
+          .from('catalogue_cache')
+          .select('*', { count: 'exact', head: true })
+          .eq('tenant_id', user.id)
+        setCatalogueCount(count ?? 0)
       }
       setLoading(false)
     }
     load()
   }, [])
+
+  async function handleSyncCatalogue() {
+    setSyncing(true)
+    setSyncResult(null)
+    try {
+      const { data, error } = await supabase.functions.invoke('xero-catalogue-sync', {
+        body: { tenant_id: user.id },
+      })
+      if (error) throw error
+      setSyncResult({ ok: true, message: `Synced ${data.synced} items (${data.accounts} accounts, ${data.items} products)` })
+      setCatalogueCount(data.synced)
+    } catch (err) {
+      setSyncResult({ ok: false, message: err.message || 'Sync failed — check Edge Function logs' })
+    }
+    setSyncing(false)
+  }
 
   async function handleDisconnect() {
     if (!window.confirm('Disconnect Xero? Invoice processing will stop for your organisation.')) return
@@ -100,6 +125,54 @@ export default function Settings() {
           </div>
         )}
       </div>
+
+      {/* Catalogue sync */}
+      {xero && (
+        <div className="card" style={{ marginBottom: 20 }}>
+          <h2 style={{ fontSize: 16, fontWeight: 700, color: 'var(--navy)', marginBottom: 4 }}>
+            Catalogue & account codes
+          </h2>
+          <p style={{ fontSize: 13, color: 'var(--text-light)', marginBottom: 16, lineHeight: 1.6 }}>
+            Syncs your Xero chart of accounts and Products & Services so Claude can match
+            bill line items to the right account codes automatically.
+          </p>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 16 }}>
+            <div style={{
+              padding: '10px 16px',
+              background: catalogueCount > 0 ? '#f0fdf4' : '#fefce8',
+              border: `1px solid ${catalogueCount > 0 ? '#86efac' : '#fde047'}`,
+              borderRadius: 'var(--radius)', fontSize: 13,
+            }}>
+              {catalogueCount === null
+                ? 'Loading…'
+                : catalogueCount > 0
+                  ? <span style={{ color: '#15803d', fontWeight: 600 }}>✓ {catalogueCount} items in catalogue</span>
+                  : <span style={{ color: '#92400e', fontWeight: 600 }}>⚠ Catalogue is empty — sync required</span>
+              }
+            </div>
+          </div>
+
+          {syncResult && (
+            <div style={{
+              background: syncResult.ok ? '#f0fdf4' : '#fef2f2',
+              border: `1px solid ${syncResult.ok ? '#86efac' : '#fecaca'}`,
+              borderRadius: 8, padding: '10px 14px',
+              fontSize: 13, color: syncResult.ok ? '#15803d' : '#dc2626', marginBottom: 16
+            }}>
+              {syncResult.ok ? '✓ ' : '✗ '}{syncResult.message}
+            </div>
+          )}
+
+          <button
+            className="btn btn-primary btn-sm"
+            onClick={handleSyncCatalogue}
+            disabled={syncing}
+          >
+            {syncing ? 'Syncing…' : catalogueCount > 0 ? 'Sync catalogue again' : 'Sync catalogue now →'}
+          </button>
+        </div>
+      )}
 
       {/* Account */}
       <div className="card">
