@@ -99,7 +99,7 @@ export default function Dashboard() {
               Link your Xero account to start processing invoices automatically.
             </div>
           </div>
-          <Link to="/settings/xero" className="btn btn-primary btn-sm">
+          <Link to="/settings" className="btn btn-primary btn-sm">
             Connect Xero →
           </Link>
         </div>
