@@ -1,5 +1,5 @@
-const CLIENT_ID    = import.meta.env.VITE_XERO_CLIENT_ID
-const REDIRECT_URI = import.meta.env.VITE_XERO_REDIRECT_URI
+const CLIENT_ID    = '2AFE585BDCF0460AA146925AC0C9FE5E'
+const REDIRECT_URI = 'https://app.streamopsai.com.au/auth/xero/callback'
 
 const SCOPES = [
   'openid',
